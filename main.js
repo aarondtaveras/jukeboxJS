@@ -26,9 +26,14 @@ class Jukebox{
 	}
 
 	goToSong(position){
-		
-
-		audioPlayer.src(this.playlist[position].mp3); 
+		if(position >= 0 && position < this.playlist.length){
+		this.audioPlayer.src = this.playlist[position].mp3;
+		this.audioPlayer.load();
+		this.playSong();
+		}
+		else{
+			console.log("Song skipping out of bounds!");
+		}
 	
 	}
 
@@ -38,15 +43,12 @@ class Jukebox{
 
 	shuffle(){
 		let pos = Math.floor(Math.random() * this.playlist.length);
-		goToSong(pos);
+		this.goToSong(pos);
 	}
 
 }
 
-var mySong = new song("Nocturne in Eb");
 var myJukebox = new Jukebox();
-
-console.log(myJukebox.playlist);
 
 var pauseButton = document.getElementById("pausebutton");
 var playButton = document.getElementById("playbutton");
@@ -55,10 +57,9 @@ var nextButton = document.getElementById("nextbutton");
 var prevButton = document.getElementById("prevbutton");
 
 myJukebox.audioPlayer.addEventListener("ended",function(event){
-	var index;
+	
 	for(let i=0;i<myJukebox.playlist.length;i++){
-		if(myJukebox.playlist[i].mp3 === myJukebox.audioPlayer.currentSrc
-			&& !((i + 1) >= myJukebox.playlist.length){
+		if(myJukebox.playlist[i].mp3 === myJukebox.audioPlayer.currentSrc){
 				myJukebox.goToSong(i+1);
 		}
 	}
@@ -77,12 +78,19 @@ shuffleButton.addEventListener("click", function(event){
 })
 
 nextButton.addEventListener("click", function(event){
-	myJukebox.shuffle();
+	for(let i=0;i<myJukebox.playlist.length;i++){
+		if(myJukebox.playlist[i].mp3 === myJukebox.audioPlayer.currentSrc){
+				myJukebox.goToSong(i-1);
+		}
+	}
 })
 
 prevButton.addEventListener("click", function(event){
-	myJukebox.shuffle();
+	for(let i=0;i<myJukebox.playlist.length;i++){
+		if(myJukebox.playlist[i].mp3 === myJukebox.audioPlayer.currentSrc){
+				myJukebox.goToSong(i+1);
+		}
+	}
 })
 
-console.log(mySong);
 
