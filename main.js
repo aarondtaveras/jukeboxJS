@@ -47,10 +47,6 @@ class Jukebox{
 		audioPlayer.play();
 	}
 
-	playNext(){
-		audioPlayer.load();
-	}
-
 	goToSong(position){
 		if(position >= 0 && position < this.playlist.length){
 		this.audioPlayer.src = this.playlist[position].mp3;
